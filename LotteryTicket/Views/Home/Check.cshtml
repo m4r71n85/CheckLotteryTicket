@@ -1,0 +1,66 @@
+﻿@using LotteryTicket.Helpers
+@model Lottery
+
+@{
+    ViewBag.Title = "Check Numbers";
+}
+<div class="jumbotron">
+    <h1>Lottery 6/49</h1>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Lottery numbers</h3>
+        </div>
+        <div class="panel-body">
+            @string.Join(", ", Model.LotteryNumbers)
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ticket numbers</h3>
+        </div>
+        <table class="table">
+            <tbody>
+                @for (int i = 0; i < Model.UserNumbers.Length; i++)
+                {
+                    if (Model.UserNumbers[i] != null && Model.UserNumbers[i][0] != 0)
+                    {
+                        <tr>
+                            <td>@string.Join(", ", Model.UserNumbers[i])</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Winnings</div>
+
+        <table class="table">
+            <tbody>
+                @for (int i = 6; i > 2; i--)
+                { 
+                <tr>
+                    <td style="text-align:center">@i</td>
+                    <td style="text-align:center">@Model.Winings[i]</td>
+                </tr>
+                }   
+            </tbody>
+        </table>
+    </div>
+
+    <button type="button" class="btn btn-default btn-lg" id="back">
+        <span class="glyphicon glyphicon-arrow-left"></span> Back
+    </button>
+</div>
+
+@section scripts{
+    <script>
+    $('#back').on("click", function () {
+        window.location.href = "@Url.Action("Index", "Home")";
+    });
+    </script>
+}
+
